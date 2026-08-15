@@ -15,6 +15,7 @@
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
         # Add packages here.
+        basedpyright
         (python3.withPackages (ps: with ps; [
           python-kasa
         ]))
