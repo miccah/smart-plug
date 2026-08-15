@@ -8,7 +8,13 @@ that I want to setup and control without an account.
 Kasa exposes an open WiFi hotspot for initial setup (indicated by alternating
 blinking red/orange LEDs, initiated by holding the power button for 5s), and I
 used [python-kasa](https://github.com/python-kasa/python-kasa) to tell it which
-address to join. Note that `keytype` is `3`, and I'm not sure what that means.
+address to join. Note that `keytype` is `3`, based on
+[this kasa reverse engineering research](https://miccah.io/assets/kasa.pdf) (page 67).
+
+* `0` = Unencrypted
+* `1` = WEP
+* `2` = WPA
+* `3` = WPA2
 
 First, setup `python-kasa`:
 
