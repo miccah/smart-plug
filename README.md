@@ -59,7 +59,7 @@ from pprint import pprint
 config = DeviceConfig(host="10.74")
 protocol = IotProtocol(transport=XorTransport(config=config))
 
-# Below are some example queries for controlling the smart plug and setting a #
+# Below are some example queries for controlling the smart plug and setting a
 # device schedule. The query parameter can be a dictionary or raw string.
 
 # Get system info.
