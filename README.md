@@ -6,7 +6,7 @@ that I want to setup and control without an account.
 ## Connect to WiFi
 
 Kasa exposes an open WiFi hotspot for initial setup (indicated by alternating
-blinking red/orange LEDs, initiated by holding the power button for 5s), and I
+blinking blue/orange LEDs, initiated by holding the power button for 5s), and I
 used [python-kasa](https://github.com/python-kasa/python-kasa) to tell it which
 address to join. Note that `keytype` is `3`, based on
 [this kasa reverse engineering research](https://miccah.io/assets/kasa.pdf) (page 67).
