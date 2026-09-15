@@ -90,3 +90,41 @@ pprint(await protocol.query('{"schedule":{"set_overall_enable":{"enable":1}}}'))
 
 await protocol.close()
 ```
+
+
+## Add a firewall to MikroTik
+
+I generally don't want my IoT devices to be able to talk to the internet.
+
+```routeros
+# Show the current DHCP leases (to get the MAC address).
+/ip/dhcp-server/lease print
+
+# Drop all packets originating from the plug's MAC address going to the WAN
+# (internet).
+/ip/firewall/filter add chain=forward src-mac-address=A8:6E:84:FB:4D:B9 out-interface-list=WAN \
+    action=drop comment="drop all smart plug packets to the internet"
+
+# Show the firewall filters.
+/ip/firewall/filter print
+```
+
+Alternatively, we can use an address list, which requires giving the plug a
+static IP address.
+
+```routeros
+# Show the current DHCP leases (to get the hostname).
+/ip/dhcp-server/lease print
+
+# Make the plug have a static IP.
+/ip/dhcp-server/lease make-static [find host-name=HS105]
+
+# Add the address assigned to the hostname to the no-internet list.
+/ip/firewall/address-list add list=no-internet \
+    address=[/ip/dhcp-server/lease get [find host-name=HS105] address]
+
+# Drop all packets originating from any addresses in the no-internet list to
+# the WAN (internet).
+/ip/firewall/filter add chain=forward src-address-list=no-internet out-interface-list=WAN \
+    action=drop comment="drop all packets to the internet"
+```
