@@ -82,6 +82,8 @@ pprint(await protocol.query({"schedule":{"add_rule":{
   "eact": 0,        # turn off
   "force": 1
 }}}))
+# Print all scheduling rules.
+pprint(await protocol.query('{"schedule":{"get_rules":{}}}'))
 # Delete all scheduling rules.
 pprint(await protocol.query('{"schedule":{"delete_all_rules":{}}}'))
 # Globally enable using schedules.
