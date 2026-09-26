@@ -130,3 +130,32 @@ static IP address.
 /ip/firewall/filter add chain=forward src-address-list=no-internet out-interface-list=WAN \
     action=drop comment="drop all packets to the internet"
 ```
+
+### Synchronizing Time
+
+Because of the firewall, the smart plug cannot synchronize time via the
+internet, so sometimes we have to manually set it. `index` is the timezone
+index (see [this reference](https://github.com/whitslack/kasa/blob/master/API.md#request-63) for
+the full enumerated values).
+
+* `5` = Pacific Standard Time
+* `6` = Pacific Daylight Time
+
+```python
+import time
+
+# Set time.
+t = time.localtime()
+pprint(await protocol.query({"time":{"set_timezone":{
+    "index": 6 if t.tm_isdst else 5,
+    "year": t.tm_year,
+    "month": t.tm_mon,
+    "mday": t.tm_mday,
+    "hour": t.tm_hour,
+    "min": t.tm_min,
+    "sec": t.tm_sec,
+}}}))
+
+# Print time.
+pprint(await protocol.query('{"time":{"get_time":{}}}'))
+```
